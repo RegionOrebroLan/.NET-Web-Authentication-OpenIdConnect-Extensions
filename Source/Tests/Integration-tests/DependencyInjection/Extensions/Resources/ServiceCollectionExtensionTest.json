@@ -1,0 +1,53 @@
+{
+	"Authentication": {
+		"OpenIdConnect": {
+			"ClaimsRequestMap": {
+				"Mappings": [
+					{
+						"AuthenticationScheme": "authentication-scheme-1",
+						"ClaimsRequest": {
+							"IdToken": [
+								{
+									"Key": "key-1"
+								},
+								{
+									"Key": "key-2",
+									"Essential": true
+								},
+								{
+									"Key": "key-3",
+									"Value": "value-3"
+								},
+								{
+									"Key": "key-4",
+									"Values": [ "value-4-1", "value-4-2", "value-4-3" ]
+								}
+							],
+							"UserInfo": [
+								{
+									"Key": "key-1"
+								}
+							]
+						}
+					},
+					{
+						"AuthenticationScheme": "authentication-scheme-2",
+						"ClaimsRequest": {
+							"IdToken": [
+								{
+									"Key": "key-1"
+								}
+							]
+						}
+					},
+					{
+						"AuthenticationScheme": "authentication-scheme-3",
+						"ClaimsRequest": {
+							"IdToken": null
+						}
+					}
+				]
+			}
+		}
+	}
+}

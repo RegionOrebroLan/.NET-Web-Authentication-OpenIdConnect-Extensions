@@ -1,0 +1,37 @@
+{
+	"ClaimsRequest-1": {
+		"IdToken": [
+			{
+				"Key": "key-1"
+			},
+			{
+				"Key": "key-2",
+				"Essential": true
+			},
+			{
+				"Key": "key-3",
+				"Value": "value-3"
+			},
+			{
+				"Key": "key-4",
+				"Values": [ "value-4-1", "value-4-2", "value-4-3" ]
+			}
+		],
+		"UserInfo": [
+			{
+				"Key": "key-1"
+			}
+		]
+	},
+	"ClaimsRequest-2": {
+		"IdToken": [
+			{
+				"Key": "key-1"
+			}
+		]
+	},
+	"ClaimsRequest-3": {
+		"IdToken": null
+	},
+	"ClaimsRequest-4": {}
+}
