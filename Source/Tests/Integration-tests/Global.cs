@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.Extensions.Configuration;
@@ -42,7 +43,7 @@ namespace IntegrationTests
 		{
 			var configurationBuilder = new ConfigurationBuilder().SetBasePath(ProjectDirectoryPath);
 
-			foreach(var path in jsonFilePaths)
+			foreach(var path in jsonFilePaths ?? Array.Empty<string>())
 			{
 				configurationBuilder.AddJsonFile(path, optional, true);
 			}
