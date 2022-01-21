@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using RegionOrebroLan.Logging.Extensions;
 
 namespace RegionOrebroLan.Web.Authentication.OpenIdConnect.Configuration
 {
@@ -52,7 +53,7 @@ namespace RegionOrebroLan.Web.Authentication.OpenIdConnect.Configuration
 
 		public virtual void PostConfigure(string name, OpenIdConnectOptions options)
 		{
-			this.Logger.LogDebug($"Post-configuration of claims-request for open-id-connect-options \"{name}\" starting...");
+			this.Logger.LogDebugIfEnabled($"Post-configuration of claims-request for open-id-connect-options \"{name}\" starting...");
 
 			if(options == null)
 				throw new ArgumentNullException(nameof(options));
@@ -64,12 +65,12 @@ namespace RegionOrebroLan.Web.Authentication.OpenIdConnect.Configuration
 
 			if(claimsRequest == null)
 			{
-				this.Logger.LogDebug($"There is no claims-request configured for open-id-connect-options \"{name}\".");
+				this.Logger.LogDebugIfEnabled($"There is no claims-request configured for open-id-connect-options \"{name}\".");
 				return;
 			}
 
 			var claimsRequestJson = claimsRequest.ToJson();
-			this.Logger.LogDebug($"Claims-request for open-id-connect-options \"{name}\" is \"{claimsRequestJson}\".");
+			this.Logger.LogDebugIfEnabled($"Claims-request for open-id-connect-options \"{name}\" is \"{claimsRequestJson}\".");
 
 			var onRedirectToIdentityProvider = options.Events.OnRedirectToIdentityProvider;
 
@@ -78,7 +79,7 @@ namespace RegionOrebroLan.Web.Authentication.OpenIdConnect.Configuration
 				if(onRedirectToIdentityProvider != null)
 					await onRedirectToIdentityProvider(context);
 
-				this.Logger.LogDebug($"Setting open-id-connect-message claims-parameter for \"{name}\" to \"{claimsRequestJson}\".");
+				this.Logger.LogDebugIfEnabled($"Setting open-id-connect-message claims-parameter for \"{name}\" to \"{claimsRequestJson}\".");
 
 				context.ProtocolMessage.Parameters.Add("claims", claimsRequestJson);
 			};
