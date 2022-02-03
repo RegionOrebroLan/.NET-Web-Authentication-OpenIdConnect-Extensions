@@ -3,4 +3,7 @@
 		<RootNamespace>UnitTests</RootNamespace>
 		<TargetFrameworks>net6.0;net5.0;netcoreapp3.1</TargetFrameworks>
 	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Test-helpers\Test-helpers.csproj" />
+	</ItemGroup>
 </Project>
