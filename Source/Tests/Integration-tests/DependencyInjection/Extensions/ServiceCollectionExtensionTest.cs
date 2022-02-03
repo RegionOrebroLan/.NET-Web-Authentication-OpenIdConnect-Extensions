@@ -11,6 +11,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using RegionOrebroLan.Web.Authentication.OpenIdConnect.Configuration;
 using RegionOrebroLan.Web.Authentication.OpenIdConnect.DependencyInjection.Extensions;
+using RegionOrebroLan.Web.Authentication.OpenIdConnect.Events;
 
 namespace IntegrationTests.DependencyInjection.Extensions
 {
@@ -27,10 +28,10 @@ namespace IntegrationTests.DependencyInjection.Extensions
 			// Key is authentication-scheme and value is the number of expected parameters added.
 			var testDictionary = new Dictionary<string, int>
 			{
-				{"authentication-scheme-1", 2},
-				{"authentication-scheme-2", 2},
-				{"authentication-scheme-3", 1},
-				{"authentication-scheme-4", 1}
+				{ "authentication-scheme-1", 2 },
+				{ "authentication-scheme-2", 2 },
+				{ "authentication-scheme-3", 1 },
+				{ "authentication-scheme-4", 1 }
 			};
 
 			var configuration = Global.CreateConfiguration("appsettings.json", Path.Combine("DependencyInjection", "Extensions", "Resources", "ServiceCollectionExtensionTest.json"));
@@ -74,6 +75,27 @@ namespace IntegrationTests.DependencyInjection.Extensions
 						Assert.AreEqual(claimsRequestMap[authenticationSchemeName].ToJson(), redirectContext.ProtocolMessage.Parameters["claims"]);
 					}
 				}
+			}
+		}
+
+		[TestMethod]
+		public async Task AddOpenIdConnectExtensions_Test()
+		{
+			var configuration = Global.CreateDefaultConfigurationBuilder().Build();
+			var services = Global.CreateServices(configuration);
+
+			services.AddOpenIdConnectExtensions(configuration);
+
+			await using(var serviceProvider = services.BuildServiceProvider())
+			{
+				var claimsRequestMapOptions = serviceProvider.GetRequiredService<IOptionsMonitor<ClaimsRequestMapOptions>>().CurrentValue;
+				Assert.IsNotNull(claimsRequestMapOptions);
+
+				var claimsRequestEvents = serviceProvider.GetRequiredService<ClaimsRequestEvents>();
+				Assert.IsNotNull(claimsRequestEvents);
+
+				var countyClientSecretJwtAuthenticationEvents = serviceProvider.GetRequiredService<CountyClientSecretJwtAuthenticationEvents>();
+				Assert.IsNotNull(countyClientSecretJwtAuthenticationEvents);
 			}
 		}
 
